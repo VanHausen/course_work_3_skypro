@@ -37,7 +37,7 @@ def page_posts_single(pk):
                            comments=comments,
                            comments_len=len(comments))
 
-@main_blueprint.route('/users/<str:user_name>/')
+@main_blueprint.route('/users/<user_name>/')
 def page_posts_by_user(user_name: str):
     """ Возвращает посты пользователя """
 
