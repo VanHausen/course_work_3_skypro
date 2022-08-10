@@ -2,7 +2,7 @@ import json
 from json import JSONDecodeError
 
 from bp_posts.dao.comment import Comment
-from exceptions import DataSourceError
+from exceptions.data_exceptions import DataSourceError
 
 
 class CommentDAO:
@@ -34,14 +34,10 @@ class CommentDAO:
 
         return comments
 
-    def get_comment_by_post_pk(self, post_pk: int) -> list[Comment] :
-        """ Получает все коментарии к определенному посту по его pk """
+    def get_comment_by_post_pk(self, post_pk: int) -> list[Comment]:
+        """ Получает все комментарии к определенному посту по его pk """
+
         comments: list[Comment] = self._load_comments()
 
         comments_match: list[Comment] = [c for c in comments if c.post_pk == post_pk]
         return comments_match
-
-
-cd = CommentDAO("data/comments.json")
-
-print(cd.get_comment_by_post_pk(2))

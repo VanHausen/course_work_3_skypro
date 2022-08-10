@@ -1,6 +1,6 @@
 class Post:
     """
-    Абстракция постов для postDAO
+    Абстракция постов для пользования в DAO
     """
 
     def __init__(self,
@@ -42,7 +42,6 @@ class Post:
            "views_count": self.views_count,
            "likes_count": self.likes_count
         }
+        return dict_data
 
-
-p = Post()
 

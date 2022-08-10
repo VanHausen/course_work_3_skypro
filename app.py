@@ -2,15 +2,13 @@ import logging
 
 from config_logger import create_logger
 
-create_logger()
-
-from utils import get_posts_all, get_posts_by_user, get_comments_by_post_id, search_for_posts, get_post_by_pk
-
 from flask import Flask
 
-from main import main_blueprint
+from bp_posts.views import main_blueprint
+
 
 logger = logging.getLogger("basic")
+create_logger(logger)
 
 POST_PATH = "data.json"
 STATIC_IMG_FOLDER = "/static/img"
@@ -24,4 +22,5 @@ logging.basicConfig(filename='basic.log', level=logging.INFO)
 
 logger.info("Приложение завершается")
 
-app.run(host='127.0.0.2', port=80)
+if __name__ == '__main__':
+  app.run(host='127.0.0.1', port=8000, debug=True)

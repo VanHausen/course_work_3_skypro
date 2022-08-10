@@ -1,26 +1,10 @@
 import logging
-import os
 from os import abort
 
 from flask import Blueprint, jsonify, abort
 
-from bp_posts.dao.bookmark import Bookmark
-from bp_posts.dao.bookmark_dao import BookmarkDAO
-from bp_posts.dao.comment import Comment
-from bp_posts.dao.comment_dao import CommentDAO
 from bp_posts.dao.post import Post
-from bp_posts.dao.post_dao import PostDAO
-
-# Создаем объекты доступа к данным
-DATA_PATH_POSTS = os.path.join("../../data", "data.json")
-DATA_PATH_COMMENTS = os.path.join("../../data", "comments.json")
-DATA_PATH_BOOKMARKS = os.path.join("../../data", "bookmarks.json")
-LOGGER_API_PATH = os.path.join("logs", "api.log")
-LOGGER_FORMAT = f"%(asctime)s - [%(levelname)s] - %(name)s - (%filename)s).%(funcName)s(%(lineno)d) - %(message)s"
-
-post_dao = PostDAO("DATA_PATH_POSTS")
-comments_dao = CommentDAO("DATA_PATH_COMMENTS")
-bookmarks_dao = BookmarkDAO("DATA_PATH_BOOKMARKS")
+from bp_posts.views import post_dao
 
 api_logger = logging.getLogger("api_logger")
 
@@ -36,16 +20,14 @@ def api_posts_all():
     return jsonify(all_posts_as_dicts), 200
 
 
-@bp_api.route('/posts/<pk: int>')
+@bp_api.route('/posts/<int: pk>')
 def api_posts_single(pk: int):
     """ Эндпоинт для одного поста """
     post: Post | None = post_dao.get_by_pk(pk)
     if post is None:
         api_logger.debug(f"Обращение к несуществующему посту {pk}")
         abort(404)
-
     api_logger.debug(f"Запрошен пост {pk}")
-
     return jsonify(post.as_dict()), 200
 
 @bp_api.errorhandler(404)

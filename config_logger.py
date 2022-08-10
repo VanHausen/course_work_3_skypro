@@ -1,7 +1,6 @@
 # Импортируем библиотеку логирования
 import logging
-
-from bp_api.views import LOGGER_API_PATH, LOGGER_FORMAT
+from config import LOGGER_API_PATH, LOGGER_FORMAT
 
 
 # Функция, которая настраивает логгер "api_logger"
@@ -19,7 +18,7 @@ def create_logger(app):
     api_logger.setLevel(logging.DEBUG)
 
     # Добавляем обработчик – ошибки будут падать в файл
-    api_logger_handler = logging.FileHandler(filename=app.config["LOGGER_API_PATH"])
+    api_logger_handler = logging.FileHandler(filename=LOGGER_API_PATH)
     api_logger_handler.setLevel(logging.DEBUG)
     api_logger.addHandler(api_logger_handler)
 

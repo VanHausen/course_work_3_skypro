@@ -1,10 +1,14 @@
-from flask import Flask, Blueprint, render_template
+from flask import Flask
 
 from bp_api.views import bp_api
-from bp_posts.dao.views import main_blueprint
-from exceptions import DataSourceError
+from bp_posts.views import main_blueprint
+from exceptions.data_exceptions import DataSourceError
 
 import config_logger
+
+app = Flask(__name__)
+app.register_blueprint(main_blueprint)
+app.config.from_pyfile()
 
 def create_and_config_app(config_path):
     app = Flask(__name__)
@@ -17,7 +21,7 @@ def create_and_config_app(config_path):
 
     return app
 
-app = create_and_config_app("config.py")
+app: Flask = create_and_config_app("config.py")
 
 @app.errorhandler(404)
 def page_error_404(error):

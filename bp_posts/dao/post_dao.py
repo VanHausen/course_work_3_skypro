@@ -2,7 +2,7 @@ import json
 from json import JSONDecodeError
 
 from bp_posts.dao.post import Post
-from exceptions import DataSourceError
+from exceptions.data_exceptions import DataSourceError
 
 
 class PostDAO:
@@ -40,10 +40,10 @@ class PostDAO:
         return posts
 
     def get_by_pk(self, pk):
-        '''
-        Получает все посты по его pk
+        """
+        Получает пост по его pk
         :return:
-        '''
+        """
         if type(pk) != int:
             raise TypeError(f"{pk} должен быть числом(int)")
 
@@ -55,6 +55,9 @@ class PostDAO:
     def search_content(self, substring):
         """ Ищет пост, где в контенте(content) встречается substring """
 
+        if type(substring) != str:
+            raise TypeError(f"{substring} должна быть строкой(str)")
+
         substring = str(substring).lower()
         posts = self._load_posts()
 
@@ -65,7 +68,7 @@ class PostDAO:
     def get_by_poster(self, user_name):
         """ Ищет посты с автором """
 
-        if type(user_name) != int:
+        if type(user_name) != str:
             raise TypeError(f"{user_name} должен быть строкой(str)")
 
         user_name = str(user_name).lower()
@@ -74,7 +77,3 @@ class PostDAO:
         match_posts = [post for post in posts if post.poster_name.lower() == user_name]
 
         return match_posts
-
-
-pd = PostDAO("data/data.json")
-# pp(pd.get_by_poster("leo"))

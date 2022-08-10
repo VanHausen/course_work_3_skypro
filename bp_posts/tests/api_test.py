@@ -6,12 +6,12 @@ import main
 
 class TestApi:
 
-    post_keys = {'pk', 'poster_name', 'poster_avatar', 'pic', 'content', 'views_count', 'likes_count'}
+    post_keys = {'poster_name', 'poster_avatar', 'pic', 'content', 'views_count', 'likes_count', 'pk'}
 
     @pytest.fixture
     def app_instance(self):
         app = main.app
-        app.config["DATA_PATH_POSTS"] == os.path.join("bp_posts", "tests", "data_test")
+        #app.config.from_pyfile('testing.py')
         test_clients = app.test_client()
         return test_clients
 
@@ -42,3 +42,5 @@ class TestApi:
     @pytest.mark.parametrize("pk", [(1), (2), (3), (4)])
     def tes_single_post_has_correct_data(self, app_instance, pk):
         result = app_instance(f"/api/posts/{pk}", follow_redirects=True)
+        post = result.get_json()
+        assert post["pk"] == pk, f"Неправильный pk при запросе поста {pk}"

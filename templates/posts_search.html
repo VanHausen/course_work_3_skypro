@@ -29,11 +29,12 @@
       <form action="/search" class="search__form">
         <input type="search" class="search__input" name= "s" value="{{ query }}" placeholder="Поиск">
       </form>
-      <p class="search__results">Найдено постов: 11</p>
+
+      <p class="search__results">Найдено постов: {{ post_len }}</p>
     </div>
     <section class="items">
 
-            {%for post in posts %}
+      {%for post in posts %}
       <div class="items__item item">
         <div class="item__top">
           <a href="/users/{{ post.poster_name }} " class="item__head">
@@ -60,7 +61,7 @@
           </button>
         </div>
       </div>
-        {% endfor %}
+      {% endfor %}
 
     </section>
   </main>

@@ -1,23 +1,19 @@
-import os
-from os import abort
-
 from flask import Blueprint, render_template, request
+from flask import abort
 
-from bp_posts.dao.bookmark_dao import BookmarkDAO
 from bp_posts.dao.comment import Comment
 from bp_posts.dao.comment_dao import CommentDAO
 from bp_posts.dao.post import Post
 from bp_posts.dao.post_dao import PostDAO
 
+from config import DATA_PATH_POSTS, DATA_PATH_COMMENTS
+
+#Создаем Blueprint
 main_blueprint = Blueprint('main_blueprint', __name__, template_folder='templates')
 
-# Создаем объекты доступа к данным
-DATA_PATH_POSTS = os.path.join("../../data", "data.json")
-DATA_PATH_COMMENTS = os.path.join("../../data", "comments.json")
-#DATA_PATH_BOOKMARKS = os.path.join("../../data", "bookmarks.json")
-post_dao = PostDAO("DATA_PATH_POSTS")
-comments_dao = CommentDAO("DATA_PATH_COMMENTS")
-#bookmarks_dao = BookmarkDAO("DATA_PATH_BOOKMARKS")
+#Создаем объекты доступа к данным
+post_dao = PostDAO(DATA_PATH_POSTS)
+comments_dao = CommentDAO(DATA_PATH_COMMENTS)
 
 @main_blueprint.route('/')
 def page_posts_index():
@@ -39,9 +35,9 @@ def page_posts_single(pk):
     return render_template("posts_single_post.html",
                            post=post,
                            comments=comments,
-                           comment_len=len(comments))
+                           comments_len=len(comments))
 
-@main_blueprint.route('/post/<str:user_name>/')
+@main_blueprint.route('/users/<str:user_name>/')
 def page_posts_by_user(user_name: str):
     """ Возвращает посты пользователя """
 
@@ -69,5 +65,5 @@ def page_posts_by_user():
     return render_template("posts_search.html",
                            posts=posts,
                            query=query,
-                           post_len=len(posts)
+                           posts_len=len(posts)
                            )
