@@ -3,13 +3,21 @@ from os import abort
 
 from flask import Blueprint, jsonify, abort
 
+from bp_posts.dao.comment_dao import CommentDAO
 from bp_posts.dao.post import Post
+from bp_posts.dao.post_dao import PostDAO
 from bp_posts.views import post_dao
 
-api_logger = logging.getLogger("api_logger")
+from config import DATA_PATH_POSTS, DATA_PATH_COMMENTS
 
+#Создаем Blueprint
 bp_api = Blueprint('bp_api', __name__)
 
+#Создаем объекты доступа к данным
+post_dao = PostDAO(DATA_PATH_POSTS)
+comments_dao = CommentDAO(DATA_PATH_COMMENTS)
+
+api_logger = logging.getLogger("api_logger")
 
 @bp_api.route('/posts/')
 def api_posts_all():

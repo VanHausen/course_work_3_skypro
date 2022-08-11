@@ -6,11 +6,8 @@ from exceptions.data_exceptions import DataSourceError
 
 import config_logger
 
-app = Flask(__name__)
-app.register_blueprint(main_blueprint)
-app.config.from_pyfile()
-
 def create_and_config_app(config_path):
+
     app = Flask(__name__)
 
     app.register_blueprint(main_blueprint)
@@ -18,10 +15,9 @@ def create_and_config_app(config_path):
 
     app.config.from_pyfile(config_path)
     config_logger.create_logger(app)
-
     return app
 
-app: Flask = create_and_config_app("config.py")
+app = create_and_config_app("config.py")
 
 @app.errorhandler(404)
 def page_error_404(error):
@@ -37,5 +33,5 @@ def page_error_data_source_error(error):
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=80000, debug=True)
+    app.run(host='127.0.0.1', port=8000, debug=True)
 
