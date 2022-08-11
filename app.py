@@ -9,7 +9,6 @@ from bp_posts.views import main_blueprint
 
 
 logger = logging.getLogger("basic")
-create_logger(logger)
 
 POST_PATH = "data.json"
 STATIC_IMG_FOLDER = "/static/img"
