@@ -11,7 +11,7 @@ class TestApi:
     @pytest.fixture
     def app_instance(self):
         app = main.app
-        #app.config.from_pyfile('testing.py')
+       # app.config.from_pyfile('testing.py')
         test_clients = app.test_client()
         return test_clients
 

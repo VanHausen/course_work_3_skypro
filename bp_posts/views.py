@@ -52,7 +52,7 @@ def page_posts_by_user(user_name: str):
                            )
 
 @main_blueprint.route('/search/')
-def page_posts_by_user():
+def page_posts_search():
     """ Возвращает результаты поиска """
 
     query: str = request.args.get("s", "")
