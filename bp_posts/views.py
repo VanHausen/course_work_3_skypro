@@ -22,7 +22,7 @@ def page_posts_index():
     all_posts = post_dao.get_all()
     return render_template("posts_index.html", posts=all_posts)
 
-@main_blueprint.route('/post/<int:pk>/')
+@main_blueprint.route('/posts/<int:pk>/')
 def page_posts_single(pk):
     """ Страница одного поста """
 
