@@ -28,7 +28,7 @@ def api_posts_all():
     return jsonify(all_posts_as_dicts), 200
 
 
-@bp_api.route('/posts/<int:pk>')
+@bp_api.route('/posts/<int:pk>/')
 def api_posts_single(pk: int):
     """ Эндпоинт для одного поста """
     post: Post | None = post_dao.get_by_pk(pk)
